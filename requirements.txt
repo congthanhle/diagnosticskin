@@ -10,3 +10,4 @@ celery
 tensorflow
 torch
 torchvision
+azure-storage-blob
