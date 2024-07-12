@@ -1,0 +1,174 @@
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simulation</title>
+    <link rel="icon" type="image/png" href="static/img/depilation.png">
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <div id="home">
+      <nav
+        class="navbar navbar-expand-lg navbar-light bg-light text-dark sticky-top"
+      >
+        <a class="navbar-brand" href="#" id="cancel-upload"
+          ><img width="200" src="../static/img/image.png"
+        /></a>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#"
+                >Home <span class="sr-only">(current)</span></a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link text-dark"
+                href="https://drive.google.com/drive/folders/1xE1SDi3rwg0bId54JC043aEo5w34o5WT?usp=sharing"
+                target="_blank"
+                >Test samples
+              </a>
+            </li>
+          </ul>
+          <div class="d-flex">
+            <img
+              width="55"
+              src="../static/img/Logo-DH-Cong-Nghe-Thong-Tin-UIT.png"
+            />
+            <img
+              width="46"
+              class="mx-3"
+              src="../static/img/Logo-Khoa-HTTT.png"
+            />
+            <div class="school-name">
+              University of Information Technology <br />
+              Faculty of Information Systems
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div class="container py-4">
+        <!-- For demo purpose -->
+        <header class="text-white text-center">
+          <h1>
+            The Science-based solution to diagnose skin diseases and skin cancer
+            using AI
+          </h1>
+          <p class="lead mb-0">
+            This product is developed based on scientific research on deep
+            learning and AI to help detect abnormalities on the skin. Experience
+            it now by uploading a skin scan image.
+          </p>
+        </header>
+        <div class="row py-2">
+          <div class="col-lg-9 mx-auto d-flex flex-column align-items-center">
+            <div
+              id="image-preview"
+              class="d-flex align-items-center justify-content-center image-area mt-4 text-center"
+            >
+              <label
+                for="upload"
+                class="btn btn btn-outline-light m-0 rounded-pill px-4 mx-auto w-20 custom-button text-uppercase font-weight-bold text-center"
+                >Choose file
+              </label>
+              <button
+                id="clear-image"
+                style="display: none; position: absolute; top: 0; right: 0"
+              >
+                X
+              </button>
+            </div>
+            <form
+              action="..\predict"
+              method="post"
+              enctype="multipart/form-data"
+              class="form-group d-flex flex-column align-items-center input-group mb-3 px-2 py-2 rounded-pill"
+            >
+              <input
+                id="upload"
+                name="upload"
+                type="file"
+                onchange="readURL(this);"
+                class="form-control border-0"
+                style="display: none"
+                accept="image/*"
+              />
+              <div class="d-flex align-items-center justify-content-center flex-wrap text-light">
+                <div class="form-check mb-4 mx-3">
+                  <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" name="model" value="ResNet50"> ResNet50
+                  </label>
+                </div>
+                <div class="form-check mb-4 mx-3">
+                  <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" name="model" value="VGG19"> VGG19
+                  </label>
+                </div>     
+                <div class="form-check mb-4 mx-3">
+                  <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" name="model" value="EfficientNet"> EfficientNet
+                  </label>
+                </div>
+                <div class="form-check mb-4 mx-3">
+                  <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" name="model" value="Swin Tranformer"> Swin Tranformer
+                  </label>
+                </div>    
+                <div class="form-check mb-4 mx-3">
+                  <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" name="model" value="CFS"> CFS
+                  </label>
+                </div>
+              </div>
+              <input
+                type="submit"
+                class="btn m-0 rounded-pill px-4 mx-auto w-20 custom-button text-uppercase font-weight-bold text-center"
+                value="Diagnostic"
+                style="background-color: #ff3456; color: white; border: none"
+              />
+            </form>
+          </div>
+        </div>
+      </div>
+      <footer class="footer fixed-bottom">
+        <div class="row d-flex justify-content-center">
+          <div class="col-md-5 mb-3 d-flex justify-content-md-center">
+            <div class="inline-block pr-2">
+              <strong>Topic: </strong>
+            </div>
+            <div class="inline-block">
+              DIAGNOSIS OF SKIN DISEASE USING DEEP LEARNING METHODS<br />
+            </div>
+          </div>
+          <div class="col-md-3 mb-3 d-flex justify-content-md-center">
+            <div class="inline-block pr-2">
+              <strong>Students: </strong>
+            </div>
+            <div class="inline-block">
+              Tran Van Quang - 20520722<br />
+              Le Cong Thanh - 20520763
+            </div>
+          </div>
+          <div class="col-md-4 mb-3 d-flex justify-content-md-center">
+            <div>
+              <strong>Supervisor: </strong>Duong Phi Long, M.Sc<br />
+              <strong>Time duration: </strong> Feb - Jun 2024
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>
