@@ -34,13 +34,13 @@ SKIN_CLASSES = {
 }
 
 SKIN_CLASSES_LINK = {
-  0: 'https://dermnetnz.org/topics/actinic-keratosis',
-  1: 'https://dermnetnz.org/topics/basal-cell-carcinoma',
-  2: 'https://dermnetnz.org/topics/seborrhoeic-keratosis',
-  3: 'https://dermnetnz.org/topics/dermatofibroma',
-  4: 'https://dermnetnz.org/topics/melanoma',
-  5: 'https://dermnetnz.org/topics/melanocytic-naevus',
-  6: 'https://www.ssmhealth.com/cardinal-glennon/services/pediatric-plastic-reconstructive-surgery/hemangiomas#:~:text=Vascular%20lesions%20are%20relatively%20common,Vascular%20Malformations%2C%20and%20Pyogenic%20Granulomas.' # Tổn thương mạch máu ở da
+  0: 'static/docs/AKIEC.pdf#toolbar=0', #AKIEC
+  1: 'static/docs/BCC.pdf#toolbar=0', 
+  2: 'static/docs/Benign-Keratosis.pdf#toolbar=0',  
+  3: 'static/docs/DF.pdf#toolbar=0', 
+  4: 'static/docs/MEL.pdf#toolbar=0',  
+  5: 'static/docs/NV.pdf#toolbar=0',
+  6: 'static/docs/VASC.pdf#toolbar=0',
 }
 
 label_colors = {
@@ -131,7 +131,6 @@ def upload_file():
         path = os.path.join(app.root_path, 'static/data', f.filename)
         f.save(path)
         model_value = request.form.getlist('model')
-        print("Modelvalue: ", model_value)
         image = Image.open(path)
         image_tensor = transform(image).unsqueeze(0).to('cpu')
         predictions = []
@@ -140,17 +139,15 @@ def upload_file():
                 model = resnet50_model
             elif value == "VGG19":
                 model = vgg19_model 
-            elif value == "EfficientNet":
+            elif value == "EfficientNet v2":
                 model = efficient_model
-            elif value == "Swin Tranformer":
+            elif value == "Swin Tranformer v2":
                 model = swin_model
             else:
                 j_file = open(os.path.join(app.root_path, 'models/ensemble.json'), 'r')
                 loaded_json_model = j_file.read()
                 j_file.close()
-                print("Test1")
                 modelCFS = model_from_json(loaded_json_model)
-                print("Test2")
                 modelCFS.load_weights(os.path.join(app.root_path, 'models/ensemble.h5'))
                 img1 = image1.load_img(path, target_size=(224,224))
                 img1 = np.array(img1)
@@ -164,11 +161,13 @@ def upload_file():
                 prediction[0][second_max_index] = max(0, prediction[0][second_max_index] - 0.2)
                 prediction[0][pred] = min(1, prediction[0][pred] + 0.2)
                 disease = SKIN_CLASSES[pred] 
+                link = SKIN_CLASSES_LINK[pred]
                 accuracy = round(min(prediction[0][pred], 1)  * 100, 2)
                 predictions.append({
                     "model": "CFS",
                     "disease": disease,
                     "probability": accuracy,
+                    "info": link
                 })
                 probabilities = prediction[0]
             if value != "CFS":
@@ -179,13 +178,14 @@ def upload_file():
                     predicted_class = np.argmax(probabilities)
                     disease = SKIN_CLASSES[predicted_class]
                     probability = round(probabilities[predicted_class] * 100, 2)
+                    link = SKIN_CLASSES_LINK[predicted_class]
                     predictions.append({
                         "model": value,
                         "disease": disease,
                         "probability": probability,
+                        "info": link
                     })
             generate_chart(probabilities, value)
-        print(predictions)
     return render_template('compare.html', title='Success', predictions=predictions, img_file=f.filename, label_colors=label_colors)
 
 @app.route('/health')

@@ -42,3 +42,11 @@ const imagePreview = document.getElementById("image-preview");
           imagePreview.innerHTML =
             '<label for="upload" class="btn btn btn-outline-light m-0 rounded-pill px-4 mx-auto w-20 custom-button text-uppercase font-weight-bold text-center">Choose file</label>';
         });
+      $(document).ready(function() {
+        $(document).on('click', '.detail-btn', function() {
+              console.log('click');
+              var link = $(this).data('link'); // Lấy đường link
+              $('#detailIframe').attr('src', link); // Cập nhật src của iframe
+              $('#iframeModal').modal('show'); // Hiển thị modal
+          });
+      });

@@ -271,14 +271,14 @@ input[type="checkbox"] {
 }
 
 .legend-color {
-	width: 20px;
-	height: 20px;
+	width: 15px;
+	height: 15px;
 	display: block;
 	margin-right: 5px;
 }
 
 .legend-label {
-	font-size: 16px;
+	font-size: 13px;
 }
 
 @media (max-width: 1420px) {
