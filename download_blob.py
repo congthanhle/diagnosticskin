@@ -1,11 +1,9 @@
 import os
 from azure.storage.blob import BlobServiceClient
-from dotenv import load_dotenv
 
-load_dotenv()
-AZURE_STORAGE_CONNECTION_STRING = os.getenv("AZURE_STORAGE_CONNECTION_STRING")
+AZURE_STORAGE_CONNECTION_STRING = os.getenv('AZURE_STORAGE_KEY')
 CONTAINER_NAME = "model-weight"
-BLOB_NAMES = ["skinResNet50_v1.pt", "skinEfficient.pt", "skinVGG19_v1.pt", "skinSwinT_v1.pt"]
+BLOB_NAMES = ["skinResNet50_v1.pt", "skinEfficient.pt", "skinSwinT_v1.pt", "skinVGG19_v1.pt"]
 LOCAL_PATH = "models"
 
 def download_blob(blob_name):
