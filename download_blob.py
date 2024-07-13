@@ -4,7 +4,7 @@ from azure.storage.blob import BlobServiceClient
 AZURE_STORAGE_CONNECTION_STRING = os.getenv('AZURE_STORAGE_KEY')
 CONTAINER_NAME = "model-weight"
 BLOB_NAMES = ["skinResNet50_v1.pt", "skinEfficient.pt", "skinSwinT_v1.pt", "skinVGG19_v1.pt"]
-LOCAL_PATH = "models"
+LOCAL_PATH = "app/models"
 
 def download_blob(blob_name):
     blob_service_client = BlobServiceClient.from_connection_string(AZURE_STORAGE_CONNECTION_STRING)
