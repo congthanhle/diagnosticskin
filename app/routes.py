@@ -155,11 +155,6 @@ def upload_file():
                 img1 = img1/255
                 prediction = modelCFS.predict(img1)
                 pred = np.argmax(prediction)
-                temp_prediction = prediction.copy()
-                temp_prediction[0][pred] = -np.inf
-                second_max_index = np.argmax(temp_prediction)
-                prediction[0][second_max_index] = max(0, prediction[0][second_max_index] - 0.2)
-                prediction[0][pred] = min(1, prediction[0][pred] + 0.2)
                 disease = SKIN_CLASSES[pred] 
                 link = SKIN_CLASSES_LINK[pred]
                 accuracy = round(min(prediction[0][pred], 1)  * 100, 2)
