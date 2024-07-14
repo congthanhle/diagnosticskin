@@ -63,6 +63,9 @@ label_colors = {
     "Vascular skin lesion": "#e377c2"
 }
 
+labels_model1 = ["Actinic keratosis","Basal Cell Carcinoma","Benign Keratosis","Dermatofibroma","Melanoma","Melanocytic Nevi","Vascular skin lesion"]
+labels_model2 = ["Melanoma","Melanocytic Nevi","Basal Cell Carcinoma","Actinic keratosis", "Benign Keratosis", "Dermatofibroma","Vascular skin lesion"]
+
 transform = transforms.Compose([
         transforms.Resize((224, 224)),
         transforms.ToTensor(),
@@ -117,14 +120,18 @@ swin_model.head = nn.Sequential(
 swin_model = swin_model.to('cpu')
 swin_model.load_state_dict(torch.load(os.path.join(app.root_path, 'models/skinSwinT_v1.pt'), map_location=torch.device('cpu')))
 
-def generate_chart(prediction_probs, model_name):
+def generate_chart(prediction_probs, model_name, labels_model):
+    colors_model = get_colors(labels_model)
     plt.figure(figsize=[20,20])
-    plt.pie(prediction_probs)
+    plt.pie(prediction_probs, colors=colors_model)
     chart_path = os.path.join(app.root_path, 'static/data', f'{model_name}.png')
     plt.savefig(chart_path, bbox_inches='tight', transparent=True)
     plt.close()
     K.clear_session() 
     return chart_path
+
+def get_colors(labels):
+    return [label_colors[label] for label in labels]
 
 @app.route('/')
 def home():
@@ -176,6 +183,7 @@ def upload_file():
                     "info": link
                 })
                 probabilities = prediction[0]
+                generate_chart(probabilities, value, labels_model1)
             if value != "CFS":
                 model.eval()
                 with torch.no_grad():
@@ -191,7 +199,7 @@ def upload_file():
                         "probability": probability,
                         "info": link
                     })
-            generate_chart(probabilities, value)
+                generate_chart(probabilities, value, labels_model2)
     return render_template('compare.html', title='Success', predictions=predictions, img_file=f.filename, label_colors=label_colors)
 
 @app.route('/health')

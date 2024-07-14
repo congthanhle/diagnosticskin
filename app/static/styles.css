@@ -281,14 +281,31 @@ input[type="checkbox"] {
 	font-size: 13px;
 }
 
+.card {
+	position: relative;
+	width: 12rem;
+	min-height: 395px;
+	height: fit-content;
+}
+.detail-btn {
+	position: absolute;
+	bottom: 0;
+	width: 100%
+}
 @media (max-width: 1420px) {
 	#home{
 		min-height: calc(100vh + 50vh);
 	}
 }
 
-@media (max-width: 500px) {
+@media (max-width: 1320px) {
 	#home{
-		min-height: calc(100vh + 150vh);
+		min-height: calc(100vh + 100vh);
+	}
+}
+
+@media (max-width: 600px) {
+	#home{
+		min-height: calc(100vh + 160vh);
 	}
 }

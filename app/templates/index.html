@@ -3,7 +3,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Simulation</title>
-    <link rel="icon" type="image/png" href="static/img/depilation.png">
+    <link rel="icon" type="image/png" href="static/img/depilation.png" />
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='styles.css') }}"
@@ -18,14 +18,26 @@
       <nav
         class="navbar navbar-expand-lg navbar-light bg-light text-dark sticky-top"
       >
-        <a class="navbar-brand" href="#" id="cancel-upload"
-          ><img width="200" src="../static/img/image.png"
-        /></a>
+        <a class="navbar-brand" href="#" id="cancel-upload">
+          <img width="200" src="../static/img/image.png" />
+        </a>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="#"
+              <a class="nav-link" href="/"
                 >Home <span class="sr-only">(current)</span></a
               >
             </li>
@@ -34,21 +46,22 @@
                 class="nav-link text-dark"
                 href="https://drive.google.com/drive/folders/1xE1SDi3rwg0bId54JC043aEo5w34o5WT?usp=sharing"
                 target="_blank"
-                >Test samples
-              </a>
+                >Test samples</a
+              >
             </li>
           </ul>
-          <div class="d-flex">
+          <div class="d-flex align-items-center">
             <img
               width="55"
               src="../static/img/Logo-DH-Cong-Nghe-Thong-Tin-UIT.png"
+              class="d-none d-md-block"
             />
             <img
               width="46"
-              class="mx-3"
+              class="mx-3 d-none d-md-block"
               src="../static/img/Logo-Khoa-HTTT.png"
             />
-            <div class="school-name">
+            <div class="school-name d-none d-md-block">
               University of Information Technology <br />
               Faculty of Information Systems
             </div>
@@ -101,30 +114,62 @@
                 style="display: none"
                 accept="image/*"
               />
-              <div class="d-flex align-items-center justify-content-center flex-wrap text-light">
+              <div
+                class="d-flex align-items-center justify-content-center flex-wrap text-light"
+              >
                 <div class="form-check mb-4 mx-3">
                   <label class="form-check-label">
-                    <input type="checkbox" class="form-check-input" name="model" value="ResNet50"> ResNet50
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      name="model"
+                      value="ResNet50"
+                    />
+                    ResNet50
                   </label>
                 </div>
                 <div class="form-check mb-4 mx-3">
                   <label class="form-check-label">
-                    <input type="checkbox" class="form-check-input" name="model" value="VGG19"> VGG19
-                  </label>
-                </div>     
-                <div class="form-check mb-4 mx-3">
-                  <label class="form-check-label">
-                    <input type="checkbox" class="form-check-input" name="model" value="EfficientNet v2"> EfficientNet v2
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      name="model"
+                      value="VGG19"
+                    />
+                    VGG19
                   </label>
                 </div>
                 <div class="form-check mb-4 mx-3">
                   <label class="form-check-label">
-                    <input type="checkbox" class="form-check-input" name="model" value="Swin Tranformer v2"> Swin Tranformer v2
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      name="model"
+                      value="EfficientNet v2"
+                    />
+                    EfficientNet v2
                   </label>
-                </div>    
+                </div>
                 <div class="form-check mb-4 mx-3">
                   <label class="form-check-label">
-                    <input type="checkbox" class="form-check-input" name="model" value="CFS"> CFS
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      name="model"
+                      value="Swin Tranformer v2"
+                    />
+                    Swin Tranformer v2
+                  </label>
+                </div>
+                <div class="form-check mb-4 mx-3">
+                  <label class="form-check-label">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      name="model"
+                      value="CFS"
+                    />
+                    CFS
                   </label>
                 </div>
               </div>
