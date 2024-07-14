@@ -53,6 +53,16 @@ SKIN_CLASSES_LINK = {
   6: 'static/docs/VASC.pdf#toolbar=0',
 }
 
+SKIN_CLASSES_LINK_1 = {
+  3: 'static/docs/AKIEC.pdf#toolbar=0',
+  2: 'static/docs/BCC.pdf#toolbar=0', 
+  4: 'static/docs/Benign-Keratosis.pdf#toolbar=0',  
+  5: 'static/docs/DF.pdf#toolbar=0', 
+  0: 'static/docs/MEL.pdf#toolbar=0',  
+  1: 'static/docs/NV.pdf#toolbar=0',
+  6: 'static/docs/VASC.pdf#toolbar=0',
+}
+
 label_colors = {
     "Actinic keratosis": "#1f77b4",
     "Basal Cell Carcinoma": "#ff7f0f",
@@ -192,7 +202,7 @@ def upload_file():
                     predicted_class = np.argmax(probabilities)
                     disease = SKIN_CLASSES_1[predicted_class]
                     probability = round(probabilities[predicted_class] * 100, 2)
-                    link = SKIN_CLASSES_LINK[predicted_class]
+                    link = SKIN_CLASSES_LINK_1[predicted_class]
                     predictions.append({
                         "model": value,
                         "disease": disease,
