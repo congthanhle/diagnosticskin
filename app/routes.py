@@ -33,6 +33,16 @@ SKIN_CLASSES = {
   6: 'Vascular skin lesion'
 }
 
+SKIN_CLASSES_1 = {
+  0: 'Melanoma', 
+  1: 'Melanocytic Nevi',
+  2: 'Basal Cell Carcinoma',
+  3: 'Actinic keratosis', 
+  4: 'Benign Keratosis',
+  5: 'Dermatofibroma',
+  6: 'Vascular skin lesion'
+}
+
 SKIN_CLASSES_LINK = {
   0: 'static/docs/AKIEC.pdf#toolbar=0', #AKIEC
   1: 'static/docs/BCC.pdf#toolbar=0', 
@@ -155,14 +165,9 @@ def upload_file():
                 img1 = img1/255
                 prediction = modelCFS.predict(img1)
                 pred = np.argmax(prediction)
-                temp_prediction = prediction.copy()
-                temp_prediction[0][pred] = -np.inf
-                second_max_index = np.argmax(temp_prediction)
-                prediction[0][second_max_index] = max(0, prediction[0][second_max_index] - 0.2)
-                prediction[0][pred] = min(1, prediction[0][pred] + 0.2)
                 disease = SKIN_CLASSES[pred] 
                 link = SKIN_CLASSES_LINK[pred]
-                accuracy = round(min(prediction[0][pred], 1)  * 100, 2)
+                accuracy = round(prediction[0][pred]* 100, 2)
                 predictions.append({
                     "model": "CFS",
                     "disease": disease,
@@ -176,7 +181,7 @@ def upload_file():
                     outputs = model(image_tensor)
                     probabilities = nn.functional.softmax(outputs, dim=1).cpu().numpy()[0]
                     predicted_class = np.argmax(probabilities)
-                    disease = SKIN_CLASSES[predicted_class]
+                    disease = SKIN_CLASSES_1[predicted_class]
                     probability = round(probabilities[predicted_class] * 100, 2)
                     link = SKIN_CLASSES_LINK[predicted_class]
                     predictions.append({
