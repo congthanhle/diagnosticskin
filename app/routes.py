@@ -53,14 +53,14 @@ SKIN_CLASSES_LINK = {
   6: 'static/docs/VASC.pdf#toolbar=0',
 }
 
-label_colors = {
-    "Actinic keratosis": "#1f77b4",
-    "Basal Cell Carcinoma": "#ff7f0f",
-    "Benign Keratosis": "#2ba02b",
-    "Dermatofibroma": "#d62728", 
-    "Melanoma": "#9467bd",
-    "Melanocytic Nevi": "#8c564b",
-    "Vascular skin lesion": "#e377c2"
+SKIN_CLASSES_LINK_1 = {
+  3: 'static/docs/AKIEC.pdf#toolbar=0', #AKIEC
+  2: 'static/docs/BCC.pdf#toolbar=0', 
+  4: 'static/docs/Benign-Keratosis.pdf#toolbar=0',  
+  5: 'static/docs/DF.pdf#toolbar=0', 
+  0: 'static/docs/MEL.pdf#toolbar=0',  
+  1: 'static/docs/NV.pdf#toolbar=0',
+  6: 'static/docs/VASC.pdf#toolbar=0',
 }
 
 transform = transforms.Compose([
@@ -116,15 +116,6 @@ swin_model.head = nn.Sequential(
 ).to('cpu')
 swin_model = swin_model.to('cpu')
 swin_model.load_state_dict(torch.load(os.path.join(app.root_path, 'models/skinSwinT_v1.pt'), map_location=torch.device('cpu')))
-
-def generate_chart(prediction_probs, model_name):
-    plt.figure(figsize=[20,20])
-    plt.pie(prediction_probs)
-    chart_path = os.path.join(app.root_path, 'static/data', f'{model_name}.png')
-    plt.savefig(chart_path, bbox_inches='tight', transparent=True)
-    plt.close()
-    K.clear_session() 
-    return chart_path
 
 @app.route('/')
 def home():
@@ -183,15 +174,14 @@ def upload_file():
                     predicted_class = np.argmax(probabilities)
                     disease = SKIN_CLASSES_1[predicted_class]
                     probability = round(probabilities[predicted_class] * 100, 2)
-                    link = SKIN_CLASSES_LINK[predicted_class]
+                    link = SKIN_CLASSES_LINK_1[predicted_class]
                     predictions.append({
                         "model": value,
                         "disease": disease,
                         "probability": probability,
                         "info": link
                     })
-            generate_chart(probabilities, value)
-    return render_template('compare.html', title='Success', predictions=predictions, img_file=f.filename, label_colors=label_colors)
+    return render_template('compare.html', title='Success', predictions=predictions, img_file=f.filename)
 
 @app.route('/health')
 def health():
