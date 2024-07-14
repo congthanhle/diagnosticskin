@@ -33,6 +33,16 @@ SKIN_CLASSES = {
   6: 'Vascular skin lesion'
 }
 
+SKIN_CLASSES_1 = {
+  0: 'Melanoma', 
+  1: 'Melanocytic Nevi',
+  2: 'Basal Cell Carcinoma',
+  3: 'Actinic keratosis', 
+  4: 'Benign Keratosis',
+  5: 'Dermatofibroma',
+  6: 'Vascular skin lesion'
+}
+
 SKIN_CLASSES_LINK = {
   0: 'static/docs/AKIEC.pdf#toolbar=0', #AKIEC
   1: 'static/docs/BCC.pdf#toolbar=0', 
@@ -171,7 +181,7 @@ def upload_file():
                     outputs = model(image_tensor)
                     probabilities = nn.functional.softmax(outputs, dim=1).cpu().numpy()[0]
                     predicted_class = np.argmax(probabilities)
-                    disease = SKIN_CLASSES[predicted_class]
+                    disease = SKIN_CLASSES_1[predicted_class]
                     probability = round(probabilities[predicted_class] * 100, 2)
                     link = SKIN_CLASSES_LINK[predicted_class]
                     predictions.append({
