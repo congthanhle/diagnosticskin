@@ -157,6 +157,7 @@ def upload_file():
                 j_file = open(os.path.join(app.root_path, 'models/ensemble.json'), 'r')
                 loaded_json_model = j_file.read()
                 j_file.close()
+                print("value")
                 modelCFS = model_from_json(loaded_json_model)
                 modelCFS.load_weights(os.path.join(app.root_path, 'models/ensemble.h5'))
                 img1 = image1.load_img(path, target_size=(224,224))
